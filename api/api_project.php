@@ -277,6 +277,9 @@ class ProjectAPI extends CDashAPI
       // We delete the buildgroup
       pdo_query("DELETE FROM buildgroup WHERE id='$Groupid'");
 
+      pdo_query("DELETE FROM build WHERE id IN (SELECT buildid AS id FROM build2group WHERE groupid='$Groupid')");
+
+/*
       // Restore the builds that were associated with this group
       $oldbuilds = pdo_query("SELECT id,type FROM build WHERE id IN (SELECT buildid AS id FROM build2group WHERE groupid='$Groupid')");
       $errorMessage .= pdo_error();
@@ -300,6 +303,7 @@ class ProjectAPI extends CDashAPI
 
         $errorMessage .= pdo_error();
         }
+*/
 
       // We delete the buildgroupposition and update the position of the other groups
       pdo_query("DELETE FROM buildgroupposition WHERE buildgroupid='$Groupid'");
